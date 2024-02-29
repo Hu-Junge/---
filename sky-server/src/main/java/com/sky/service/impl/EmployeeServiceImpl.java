@@ -85,11 +85,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employee.setStatus(StatusConstant.ENABLE); // 设定账号初始状态--1表示正常，0表示锁定，使用常量类便于后续修改
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes())); // 设置账号初始密码--进行md5加密
-        employee.setCreateTime(LocalDateTime.now()); // 设置创建时间
+/*        employee.setCreateTime(LocalDateTime.now()); // 设置创建时间
         employee.setUpdateTime(LocalDateTime.now()); // 设置更新时间
         // 修改为当前登录用户的id
         employee.setCreateUser(BaseContext.getCurrentId()); // 设置创建者
-        employee.setUpdateUser(BaseContext.getCurrentId()); // 设置更新着
+        employee.setUpdateUser(BaseContext.getCurrentId()); // 设置更新着*/
 
         employeeMapper.insert(employee);
     }
@@ -152,8 +152,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);
         // 设置更新时间和更新人
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+/*        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());*/
 
         employeeMapper.update(employee);
     }
