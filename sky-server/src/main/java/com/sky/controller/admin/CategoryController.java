@@ -13,6 +13,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 分类管理接口
  */
@@ -76,11 +78,30 @@ public class CategoryController {
         return Result.success();
     }
 
+    /**
+     * 修改分类
+     * @param categoryDTO
+     * @return
+     */
     @PutMapping()
     @ApiOperation("修改分类信息")
     public Result update(@RequestBody CategoryDTO categoryDTO){
         log.info("修改信息为：{}",categoryDTO);
         categoryService.update1(categoryDTO);
         return Result.success();
+    }
+
+    /**
+     * 根据类型查询分类
+     * @param type
+     * @return
+     */
+    @GetMapping("/list")
+    @ApiOperation("根据类型查询分类")
+    public Result<List<Category>> select(Integer type){
+        // @PathVariable的参数必须存在
+        log.info("查询的类型：{}",type==1?"菜品":"套餐");
+        List<Category> category =  categoryService.select(type);
+        return Result.success(category);
     }
 }
