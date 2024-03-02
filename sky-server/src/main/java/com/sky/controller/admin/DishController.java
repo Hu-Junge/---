@@ -10,10 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin/dish")
@@ -23,6 +20,11 @@ public class DishController {
     @Autowired
     private DishService dishService;
 
+    /**
+     * 菜品分页查询
+     * @param dishPageQueryDTO
+     * @return
+     */
     @GetMapping("/page")
     @ApiOperation("菜品管理分类查询")
     public Result<PageResult> page(DishPageQueryDTO dishPageQueryDTO){
@@ -32,5 +34,17 @@ public class DishController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 新增菜品
+     * @param dishDTO
+     * @return
+     */
+    @PostMapping()
+    @ApiOperation("新增菜品")
+    public Result save(@RequestBody DishDTO dishDTO) {
+        log.info("新增菜品信息：{}",dishDTO);
+        dishService.save(dishDTO);
+        return Result.success();
+    }
 
 }
