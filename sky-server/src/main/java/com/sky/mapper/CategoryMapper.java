@@ -34,7 +34,7 @@ public interface CategoryMapper {
 
     /**
      * 修改分类
-     * @param status
+     * @param category
      */
     @AutoFill(value = OperationType.UPDATE)
     void update(Category category);

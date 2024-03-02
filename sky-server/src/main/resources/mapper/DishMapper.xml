@@ -3,4 +3,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.DishMapper">
 
+    <select id="pageQuery" resultType="dish">
+        select * from sky_take_out.dish
+        <where>
+            <if test="name != null and page != '' ">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and categoryId = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 </mapper>
