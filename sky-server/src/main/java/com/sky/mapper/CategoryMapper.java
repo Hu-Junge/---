@@ -6,6 +6,7 @@ import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
 import com.sky.entity.Category;
 import com.sky.enumeration.OperationType;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -23,4 +24,11 @@ public interface CategoryMapper {
      */
     @AutoFill(value = OperationType.INSERT)
     void insert(Category category);
+
+    /**
+     * 根据id删除分类
+     * @param id
+     */
+    @Delete("delete from sky_take_out.category where id = #{id}")
+    void delete(Long id);
 }
