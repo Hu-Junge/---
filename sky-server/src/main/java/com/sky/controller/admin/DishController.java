@@ -39,6 +39,7 @@ public class DishController {
      * @param dishDTO
      * @return
      */
+    // TODO 还没测试，需要先完成图片上传和菜品分类查询
     @PostMapping()
     @ApiOperation("新增菜品")
     public Result save(@RequestBody DishDTO dishDTO) {
@@ -46,5 +47,7 @@ public class DishController {
         dishService.save(dishDTO);
         return Result.success();
     }
+
+
 
 }
