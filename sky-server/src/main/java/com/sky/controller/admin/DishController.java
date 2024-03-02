@@ -35,16 +35,16 @@ public class DishController {
     }
 
     /**
-     * 新增菜品
+     * 新增菜品和口味
      * @param dishDTO
      * @return
      */
-    // TODO 还没测试，需要先完成图片上传和菜品分类查询
+    // TODO 还没测试，需要完成菜品分类查询
     @PostMapping()
-    @ApiOperation("新增菜品")
+    @ApiOperation("新增菜品和口味")
     public Result save(@RequestBody DishDTO dishDTO) {
-        log.info("新增菜品信息：{}",dishDTO);
-        dishService.save(dishDTO);
+        log.info("新增菜品和口味信息：{}",dishDTO);
+        dishService.saveWithFlavor(dishDTO);
         return Result.success();
     }
 

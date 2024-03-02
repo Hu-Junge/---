@@ -14,8 +14,8 @@ public interface DishService {
     PageResult page(DishPageQueryDTO dishPageQueryDTO);
 
     /**
-     * 新增菜品
+     * 新增菜品和口味
      * @param dishDTO
      */
-    void save(DishDTO dishDTO);
+    void saveWithFlavor(DishDTO dishDTO);
 }
