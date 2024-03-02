@@ -62,4 +62,25 @@ public class CategoryController {
         return Result.success();
     }
 
+    /**
+     * 修改分类状态
+     * @param status
+     * @param id
+     * @return
+     */
+    @ApiOperation("修改分类状态")
+    @PostMapping("/status/{status}")
+    public Result status(@PathVariable Integer status,Long id){
+        log.info("修改分类状态为：{}",status == 1?"启用":"禁用");
+        categoryService.update(status,id);
+        return Result.success();
+    }
+
+    @PutMapping()
+    @ApiOperation("修改分类信息")
+    public Result update(@RequestBody CategoryDTO categoryDTO){
+        log.info("修改信息为：{}",categoryDTO);
+        categoryService.update1(categoryDTO);
+        return Result.success();
+    }
 }

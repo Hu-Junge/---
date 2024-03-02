@@ -111,11 +111,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void startOrStop(Integer status, Long id) {
 
-        /*两种创建对象的方法效果一致
-        Employee employee = new Employee();
-        employee.setStatus(status);
-        employee.setId(id);
-        */
         Employee employee = Employee.builder()
                 .id(id)
                 .status(status)
@@ -144,9 +139,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         // 将DTO拷贝至employee
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);
-        // 设置更新时间和更新人
-/*        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());*/
 
         employeeMapper.update(employee);
     }

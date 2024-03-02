@@ -60,4 +60,29 @@ public class CategoryServiceImpl implements CategoryService {
     public void delete(Long id) {
         categoryMapper.delete(id);
     }
+
+    /**
+     * 修改分类状态
+     * @param status
+     */
+    @Override
+    public void update(Integer status,Long id) {
+
+        Category category = Category.builder().id(id).status(status).build();
+
+        categoryMapper.update(category);
+    }
+
+    /**
+     * 修改分类信息
+     * @param categoryDTO
+     */
+    @Override
+    public void update1(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        BeanUtils.copyProperties(categoryDTO,category);
+        categoryMapper.update(category);
+    }
+
+
 }

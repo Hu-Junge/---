@@ -6,6 +6,20 @@
         insert into sky_take_out.category(type, name, sort, status, create_time, update_time, create_user, update_user)
         values (#{type},#{name},#{sort},#{status},#{createTime},#{updateTime},#{createUser},#{updateUser})
     </insert>
+    <update id="update">
+        update sky_take_out.category
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createUser != null ">create_User = #{createUser},</if>
+            <if test="updateUser != null">update_User = #{updateUser},</if>
+            <if test="createTime != null">create_Time = #{createTime},</if>
+            <if test="updateTime != null">update_Time = #{updateTime}</if>
+        </set>
+        where id = #{id}
+    </update>
 
     <select id="pageQuery" resultType="com.sky.entity.Category">
         select * from sky_take_out.category
