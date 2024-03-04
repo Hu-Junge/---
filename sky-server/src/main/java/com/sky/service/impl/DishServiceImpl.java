@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.concurrent.ThreadSafe;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -107,9 +108,10 @@ public class DishServiceImpl implements DishService {
 
 
     /**
-     * 修改菜品信息
+     * 修改菜品/口味信息
      * @param dishDTO
      */
+    // TODO 未测试
     @Override
     @Transactional
     public void update(DishDTO dishDTO) {
@@ -118,10 +120,19 @@ public class DishServiceImpl implements DishService {
         BeanUtils.copyProperties(dishDTO,dish);
         // 修改菜品数据
         dishMapper.update(dish);
-        // 修改口味数据
-        List<DishFlavor> dishFlavors = dishDTO.getFlavors(); // 获取口味数据
-        if(dishFlavors != null && dishFlavors.size() > 0){
-
+        // 删除对应的所有口味数据
+        List<Long> dishIds = new ArrayList<>();
+        dishIds.add(dishDTO.getId());
+        flavorMapper.deleteByDishIds(dishIds);
+        // 重新插入口味数据
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        if(flavors != null && flavors.size() > 0){
+            // 遍历flavors放入菜品id
+            // flavor是为每一个遍历对象起的名字 {}花括号内是对每个对象的操作
+            flavors.forEach(flavor -> {
+                flavor.setDishId(dishDTO.getId());
+            });
+            flavorMapper.insertBatch(flavors);
         }
 
     }
