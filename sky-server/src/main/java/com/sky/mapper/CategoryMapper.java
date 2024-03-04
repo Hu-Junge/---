@@ -50,7 +50,4 @@ public interface CategoryMapper {
     @Select("select * from sky_take_out.category where type = #{type}")
     List<Category> select(Integer type);
 
-    /**
-     * 根据类型查询分类
-     */
 }
