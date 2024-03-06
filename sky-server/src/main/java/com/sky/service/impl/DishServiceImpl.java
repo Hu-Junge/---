@@ -111,7 +111,7 @@ public class DishServiceImpl implements DishService {
      * 修改菜品/口味信息
      * @param dishDTO
      */
-    // TODO 未测试
+    // TODO 菜品修改功能未测试
     @Override
     @Transactional
     public void update(DishDTO dishDTO) {
