@@ -35,10 +35,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User wxLogin(UserLoginDTO userLoginDTO) {
         String openid = this.getOpenid(userLoginDTO.getCode());
-        // 判断openid是否为空
-        if( openid == null ){
-            throw new LoginFailedException(MessageConstant.LOGIN_FAILED);
-        }
         // 判断当前用户是否是新用户
         User user = userMapper.getByOpenid(openid);
         // 如果是新用户，自动完成注册
@@ -63,6 +59,9 @@ public class UserServiceImpl implements UserService {
         // 解析json
         JSONObject jsonObject = JSON.parseObject(json);
         String openid = jsonObject.getString("openid");
+        if (openid == null){
+            throw new LoginFailedException("登录失败,可能原因是："+json);
+        }
 
         return openid;
     }

@@ -47,4 +47,9 @@ public interface DishMapper {
      */
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);
+    /**
+     * 动态查询菜品(分类id以及起售状态)
+     */
+    List<Dish> list(Dish dish);
+
 }

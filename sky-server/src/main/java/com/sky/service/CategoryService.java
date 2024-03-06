@@ -45,4 +45,5 @@ public interface CategoryService {
      * @return
      */
     List<Category> select(Integer type);
+
 }
