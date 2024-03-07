@@ -5,6 +5,8 @@ import com.sky.dto.ShoppingCartDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
 import com.sky.entity.ShoppingCart;
+import com.sky.exception.BaseException;
+import com.sky.exception.ShoppingCartBusinessException;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
@@ -85,5 +87,29 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void clean() {
         Long userId = BaseContext.getCurrentId();
         shoppingCartMapper.clean(userId);
+    }
+
+    /**
+     * 加减法
+     * @param shoppingCartDTO
+     */
+    @Override
+    public void sub(ShoppingCartDTO shoppingCartDTO)  {
+        // 属性拷贝
+        ShoppingCart shoppingCart = new ShoppingCart();
+        BeanUtils.copyProperties(shoppingCartDTO,shoppingCart);
+        // 获取当前用户id
+        shoppingCart.setUserId(BaseContext.getCurrentId());
+        // 查询数据
+        List<ShoppingCart> select = shoppingCartMapper.select(shoppingCart);
+        // 获取第一条数据
+        ShoppingCart shoppingCart1 = select.get(0);
+        if ( shoppingCart1.getNumber() > 1){
+            shoppingCart1.setNumber(shoppingCart1.getNumber() - 1);
+            shoppingCartMapper.updateNumberById(shoppingCart1);
+        } else {
+            throw new ShoppingCartBusinessException("删除单个菜品尚未开发");
+        }
+
     }
 }

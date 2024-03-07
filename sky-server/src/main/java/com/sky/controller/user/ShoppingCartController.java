@@ -55,4 +55,14 @@ public class ShoppingCartController {
         shoppingCartService.clean();
         return Result.success();
     }
+
+    /**
+     * 购物车加减法(bushi)
+     */
+    @PostMapping("/sub")
+    public Result sub(@RequestBody ShoppingCartDTO shoppingCartDTO){
+        log.info("加减法？");
+        shoppingCartService.sub(shoppingCartDTO);
+        return Result.success();
+    }
 }

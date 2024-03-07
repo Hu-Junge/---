@@ -23,4 +23,9 @@ public interface ShoppingCartService {
      */
     void clean();
 
+    /**
+     * 加减法
+     * @param shoppingCartDTO
+     */
+    void sub(ShoppingCartDTO shoppingCartDTO);
 }
