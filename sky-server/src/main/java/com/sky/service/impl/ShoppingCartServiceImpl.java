@@ -41,7 +41,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         // 判断购物车是否已经存在  根据SQL的写法这里有两种结果：null或只有1条数据
         List<ShoppingCart> select = shoppingCartMapper.select(shoppingCart);
         // 不存在--insert   存在--update
-        if (select == null && select.size() < 1 ){
+        if (select == null || select.size() < 1 ){
             // 判断菜品/套餐--添加菜品/套餐的名称、图片等信息
             Long dishId = shoppingCartDTO.getDishId();
             if (  dishId != null ){
@@ -65,5 +65,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             shoppingCartMapper.updateNumberById(shoppingCart1);
         }
 
+    }
+
+    /**
+     * 获取购物车信息
+     * @return
+     */
+    @Override
+    public List<ShoppingCart> list() {
+        Long userId = BaseContext.getCurrentId();
+        List<ShoppingCart> list = shoppingCartMapper.list(userId);
+        return list;
     }
 }
