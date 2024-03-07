@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public PageResult pageQuery(CategoryPageQueryDTO categoryPageQueryDTO) {
-        // TODO 不知道这句代码的意思
+
         PageHelper.startPage(categoryPageQueryDTO.getPage(),categoryPageQueryDTO.getPageSize());
 
         Page<Category> page = categoryMapper.pageQuery(categoryPageQueryDTO);
