@@ -10,4 +10,10 @@ public interface OrderService {
      * @return
      */
     OrderSubmitVO submitOrder(OrdersSubmitDTO ordersSubmitDTO);
+
+    /**
+     * 支付成功，修改订单状态
+     * @param outTradeNo
+     */
+    public void paySuccess(String outTradeNo);
 }

@@ -43,6 +43,7 @@ public class OrderController {
         orderPaymentVO.setTimeStamp("111");
         orderPaymentVO.setSignType("111");
         orderPaymentVO.setPackageStr("111");
+        orderService.paySuccess(ordersPaymentDTO.getOrderNumber());
         return Result.success(orderPaymentVO);
     }
 }

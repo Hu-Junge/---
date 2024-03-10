@@ -31,4 +31,13 @@ public interface OrderMapper {
      * @param order
      */
     void update(Orders order);
+
+    /**
+     * 根据订单号和用户id查询订单
+     * @param number
+     * @param userId
+     * @return
+     */
+    @Select("select * from sky_take_out.orders where user_id = #{userId} and number = #{number}")
+    Orders getByNumberAndUserId(String number, Long userId);
 }

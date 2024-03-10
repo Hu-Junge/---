@@ -18,7 +18,7 @@ public class OrderTask {
     /**
      * 处理超时订单
      */
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void processTimeOutOrder(){
         log.info("处理超时订单:{}",LocalDateTime.now());
         List<Orders> orders = orderMapper.getByStatusAndOrderTime(Orders.PENDING_PAYMENT,LocalDateTime.now().plusMinutes(-15));
