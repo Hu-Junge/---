@@ -40,4 +40,17 @@ public interface OrderMapper {
      */
     @Select("select * from sky_take_out.orders where user_id = #{userId} and number = #{number}")
     Orders getByNumberAndUserId(String number, Long userId);
+    /**
+
+     * 用于替换微信支付更新数据库状态的问题
+
+     * @param orderStatus
+
+     * @param orderPaidStatus
+
+     */
+
+    @Update("update sky_take_out.orders set status = #{orderStatus},pay_status = #{orderPaidStatus} ,checkout_time = #{check_out_time} where user_id = #{userId} and number = #{number}")
+
+    void updateStatus(Integer orderStatus, Integer orderPaidStatus, LocalDateTime check_out_time,Long userId ,String number);
 }

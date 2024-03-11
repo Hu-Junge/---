@@ -36,14 +36,10 @@ public class OrderController {
      * 订单支付
      */
     @PutMapping("/payment")
-    public Result<OrderPaymentVO> payment(@RequestBody OrdersPaymentDTO ordersPaymentDTO){
-        OrderPaymentVO orderPaymentVO = new OrderPaymentVO();
-        orderPaymentVO.setNonceStr("2024-03-24T14:15:22Z");
-        orderPaymentVO.setPaySign("111");
-        orderPaymentVO.setTimeStamp("111");
-        orderPaymentVO.setSignType("111");
-        orderPaymentVO.setPackageStr("111");
-        orderService.paySuccess(ordersPaymentDTO.getOrderNumber());
+    public Result<OrderPaymentVO> payment(@RequestBody OrdersPaymentDTO ordersPaymentDTO) throws Exception {
+        log.info("订单支付：{}", ordersPaymentDTO);
+        OrderPaymentVO orderPaymentVO = orderService.payment(ordersPaymentDTO);
+        log.info("生成预支付交易单：{}", orderPaymentVO);
         return Result.success(orderPaymentVO);
     }
 }

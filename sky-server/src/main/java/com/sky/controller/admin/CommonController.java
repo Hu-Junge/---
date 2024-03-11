@@ -17,12 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(tags = "通用接口")
 @Slf4j
 public class CommonController {
-
+    /**
+     * 文件上传
+     * @param file
+     * @return
+     */
     @PostMapping("/upload")
     @ApiOperation("文件上传")
-    // TODO 文件上传未开发
     public Result<String> upload(MultipartFile file){
-        log.info("file:{}",file);
+        log.info("文件上传file:{}",file);
         return Result.success();
     }
 }
