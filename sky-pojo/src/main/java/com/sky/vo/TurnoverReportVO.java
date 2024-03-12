@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+// 序列化和反序列化：https://blog.csdn.net/so_geili/article/details/78931742
 public class TurnoverReportVO implements Serializable {
 
     //日期，以逗号分隔，例如：2022-10-01,2022-10-02,2022-10-03

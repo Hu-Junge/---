@@ -28,4 +28,18 @@
         </set>
         where id = #{id}
     </update>
+    <select id="getByOrderTimeAndStatus" resultType="java.lang.Double">
+        select sum(amount) from sky_take_out.orders
+        <where>
+            <if test="dateMin != null">
+                and order_time &gt; #{dateMin}
+            </if>
+            <if test="dateMax != null">
+                and order_time &lt; #{dateMax}
+            </if>
+            <if test=" status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
 </mapper>

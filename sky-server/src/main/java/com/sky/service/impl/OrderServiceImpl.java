@@ -14,6 +14,7 @@ import com.sky.service.OrderService;
 import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
+import com.sky.vo.OrderVO;
 import com.sky.websocket.WebSocketServer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
+    // TODO 插入信息不完全，返回数据为null
     public OrderSubmitVO submitOrder(OrdersSubmitDTO ordersSubmitDTO) {
         // 校验业务异常(地址为空 or 购物车为空)
         AddressBook addressBook = addressBookMapper.getById(ordersSubmitDTO.getAddressBookId());
@@ -160,5 +162,29 @@ public class OrderServiceImpl implements OrderService {
         map.put("content","订单号"+outTradeNo);
         String jsonString = JSON.toJSONString(map);
         webSocketServer.sendToAllClient(jsonString);
+    }
+
+    /**
+     * 查询订单详细
+     * @param id
+     * @return
+     */
+    @Override
+    public OrderVO selectOrderDetail(Long id) {
+        // 查询order表
+        Orders orders = orderMapper.getById(id);
+        // 封装为字符串
+        /*
+        Map map = new HashMap<>();
+        map.put("data",orders.toString());
+        String orderDishes = map.toString();*/
+        // 查询订单详细表
+        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(id);
+        // 封装返回值
+        OrderVO orderVO = new OrderVO();
+        BeanUtils.copyProperties(orders,orderVO);
+        // orderVO.setOrderDishes(orderDishes);
+        orderVO.setOrderDetailList(orderDetailList);
+        return orderVO;
     }
 }

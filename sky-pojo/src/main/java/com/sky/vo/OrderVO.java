@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderVO extends Orders implements Serializable {
-
+// 这里继承了父类
     //订单菜品信息
     private String orderDishes;
 

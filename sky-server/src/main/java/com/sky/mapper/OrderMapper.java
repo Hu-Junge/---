@@ -53,4 +53,13 @@ public interface OrderMapper {
     @Update("update sky_take_out.orders set status = #{orderStatus},pay_status = #{orderPaidStatus} ,checkout_time = #{check_out_time} where user_id = #{userId} and number = #{number}")
 
     void updateStatus(Integer orderStatus, Integer orderPaidStatus, LocalDateTime check_out_time,Long userId ,String number);
+
+    /**
+     * 查询订单详细
+     * @param id
+     */
+    @Select("select * from sky_take_out.orders where id = #{id}")
+    Orders getById(Long id);
+
+    Double getByOrderTimeAndStatus(LocalDateTime dateMin, LocalDateTime dateMax, Integer status);
 }
