@@ -33,8 +33,8 @@ public class ReportController {
     @GetMapping("/turnoverStatistics")
     @ApiOperation("营业额统计")
     public Result<TurnoverReportVO> turnoverStatistics(
-            @DateTimeFormat(pattern = "YYYY-MM-DD") LocalDate begin,
-            @DateTimeFormat(pattern = "YYYY-MM-DD")LocalDate end){
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate end){
         log.info("获取指定时间区域营业额统计");
         return Result.success(reportService.getTurnoverStatistics(begin,end));
     }

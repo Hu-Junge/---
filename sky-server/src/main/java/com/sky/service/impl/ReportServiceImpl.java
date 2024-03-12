@@ -32,8 +32,10 @@ public class ReportServiceImpl implements com.sky.service.ReportService {
         // 构建dateList
         List<LocalDate> dateList = new ArrayList<>();
         dateList.add(begin);
+        // 这里发生了内存溢出 进入死循环
         while(!begin.equals(end)){
-            dateList.add(begin.plusDays(1));
+            begin = begin.plusDays(1);
+            dateList.add(begin);
         }
         String dateListS = StringUtils.join(dateList, ",");
         // 构建turnoverList
