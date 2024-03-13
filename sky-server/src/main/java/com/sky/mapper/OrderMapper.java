@@ -1,5 +1,6 @@
 package com.sky.mapper;
 
+import com.sky.dto.GoodsSalesDTO;
 import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -63,6 +64,8 @@ public interface OrderMapper {
 
     Integer getByOrderTimeAndStatus(LocalDateTime dateMin, LocalDateTime dateMax, Integer status);
 
+    Integer getNumByOrderTimeAndStatus(LocalDateTime dateMin, LocalDateTime dateMax, Integer status);
+
     /**
      * 统计新增用户量
      * @param dateMin
@@ -70,4 +73,6 @@ public interface OrderMapper {
      * @return
      */
     Integer getTotalUserByCreateTime(LocalDateTime dateMin, LocalDateTime dateMax);
+
+    List<GoodsSalesDTO> getSalesTop10(LocalDateTime beginTime, LocalDateTime endTime);
 }

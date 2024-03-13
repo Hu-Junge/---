@@ -1,10 +1,12 @@
 package com.sky.service.impl;
 
+import com.sky.dto.GoodsSalesDTO;
 import com.sky.entity.Orders;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.ReportMapper;
 import com.sky.mapper.UserMapper;
 import com.sky.vo.OrderReportVO;
+import com.sky.vo.SalesTop10ReportVO;
 import com.sky.vo.TurnoverReportVO;
 import com.sky.vo.UserReportVO;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportServiceImpl implements com.sky.service.ReportService {
@@ -42,8 +45,7 @@ public class ReportServiceImpl implements com.sky.service.ReportService {
             // select sum(amount) from orders where order_time > dateMin and order_time < dateMax and status = 5
             LocalDateTime dateMin = LocalDateTime.of(date, LocalTime.MIN);
             LocalDateTime dateMax = LocalDateTime.of(date, LocalTime.MAX);
-            Double turnover = Double.valueOf(orderMapper.getByOrderTimeAndStatus(dateMin,dateMax, Orders.COMPLETED));
-            turnover = turnover == null ? 0.0:turnover;
+            Double turnover = Double.valueOf(orderMapper.getByOrderTimeAndStatus(dateMin,dateMax, Orders.COMPLETED) == null ? 0.0:orderMapper.getByOrderTimeAndStatus(dateMin,dateMax, Orders.COMPLETED));
             turnoverList.add(turnover);
         }
         String turnoverListS = StringUtils.join(turnoverList, ",");
@@ -113,10 +115,10 @@ public class ReportServiceImpl implements com.sky.service.ReportService {
             LocalDateTime beginTime = LocalDateTime.of(date, LocalTime.MIN);
             LocalDateTime endTime = LocalDateTime.of(date, LocalTime.MAX);
             Integer orderCount = getOrderCount(beginTime, endTime, null);
-
+            orderCount = orderCount == null ? 0:orderCount;
             //查询每天的有效订单数 select count(id) from orders where order_time > ? and order_time < ? and status = 5
             Integer validOrderCount = getOrderCount(beginTime, endTime, Orders.COMPLETED);
-
+            validOrderCount = validOrderCount == null ? 0:validOrderCount;
             orderCountList.add(orderCount);
             validOrderCountList.add(validOrderCount);
         }
@@ -151,12 +153,7 @@ public class ReportServiceImpl implements com.sky.service.ReportService {
      * @return
      */
     private Integer getOrderCount(LocalDateTime begin, LocalDateTime end, Integer status){
-        Map map = new HashMap();
-        map.put("begin",begin);
-        map.put("end",end);
-        map.put("status",status);
-
-        return orderMapper.getByOrderTimeAndStatus(begin,end,status);
+        return orderMapper.getNumByOrderTimeAndStatus(begin,end,status);
     }
 
     /**
@@ -177,4 +174,30 @@ public class ReportServiceImpl implements com.sky.service.ReportService {
 
         return dateList;
     }
+    /**
+     * 统计指定时间区间内的销量排名前10
+     * @param begin
+     * @param end
+     * @return
+     */
+    public SalesTop10ReportVO getSalesTop10(LocalDate begin, LocalDate end) {
+        LocalDateTime beginTime = LocalDateTime.of(begin, LocalTime.MIN);
+        LocalDateTime endTime = LocalDateTime.of(end, LocalTime.MAX);
+
+        List<GoodsSalesDTO> salesTop10 = orderMapper.getSalesTop10(beginTime, endTime);
+        List<String> names = salesTop10.stream().map(GoodsSalesDTO::getName).collect(Collectors.toList());
+        String nameList = StringUtils.join(names, ",");
+
+        List<Integer> numbers = salesTop10.stream().map(GoodsSalesDTO::getNumber).collect(Collectors.toList());
+        String numberList = StringUtils.join(numbers, ",");
+
+        //封装返回结果数据
+        return SalesTop10ReportVO
+                .builder()
+                .nameList(nameList)
+                .numberList(numberList)
+                .build();
+    }
+
+
 }

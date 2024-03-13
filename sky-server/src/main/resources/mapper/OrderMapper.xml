@@ -28,7 +28,7 @@
         </set>
         where id = #{id}
     </update>
-    <select id="getByOrderTimeAndStatus" resultType="java.lang.Double">
+    <select id="getByOrderTimeAndStatus" resultType="java.lang.Integer">
         select sum(amount) from sky_take_out.orders
         <where>
             <if test="dateMin != null">
@@ -52,5 +52,33 @@
                 and create_time &lt; #{dateMax}
             </if>
         </where>
+    </select>
+    <select id="getNumByOrderTimeAndStatus" resultType="java.lang.Integer">
+        select count(id) from sky_take_out.orders
+        <where>
+            <if test="dateMin != null">
+                and order_time &gt; #{dateMin}
+            </if>
+            <if test="dateMax != null">
+                and order_time &lt; #{dateMax}
+            </if>
+            <if test=" status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="getSalesTop10" resultType="com.sky.dto.GoodsSalesDTO">
+        select od.name, sum(od.number) number
+        from sky_take_out.order_detail od,sky_take_out.orders o
+        where od.order_id = o.id and o.status = 5
+        <if test="begin != null">
+            and o.order_time &gt; #{begin}
+        </if>
+        <if test="end != null">
+            and o.order_time &lt; #{end}
+        </if>
+        group by od.name
+        order by number desc
+        limit 0,10
     </select>
 </mapper>
