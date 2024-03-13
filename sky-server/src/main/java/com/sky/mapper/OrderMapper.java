@@ -61,5 +61,13 @@ public interface OrderMapper {
     @Select("select * from sky_take_out.orders where id = #{id}")
     Orders getById(Long id);
 
-    Double getByOrderTimeAndStatus(LocalDateTime dateMin, LocalDateTime dateMax, Integer status);
+    Integer getByOrderTimeAndStatus(LocalDateTime dateMin, LocalDateTime dateMax, Integer status);
+
+    /**
+     * 统计新增用户量
+     * @param dateMin
+     * @param dateMax
+     * @return
+     */
+    Integer getTotalUserByCreateTime(LocalDateTime dateMin, LocalDateTime dateMax);
 }

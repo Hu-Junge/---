@@ -42,4 +42,15 @@
             </if>
         </where>
     </select>
+    <select id="getTotalUserByCreateTime" resultType="java.lang.Integer">
+        select count(id) from sky_take_out.user
+        <where>
+            <if test="dateMin != null">
+                and create_time &gt; #{dateMin}
+            </if>
+            <if test="dateMax != null">
+                and create_time &lt; #{dateMax}
+            </if>
+        </where>
+    </select>
 </mapper>
